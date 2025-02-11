@@ -84,7 +84,7 @@ def draw_line(img, x0, y0, x1, y1,color):
 
 
 
-file =open('C://Users//Pygmalion//Downloads//Telegram Desktop//model_1.obj','r+')
+file =open('model_1.obj','r+')
 v=[]
 p=[]
 img_mat= np.zeros((1000,1000,3),dtype=np.uint8)
@@ -96,8 +96,6 @@ for str in file:
     if(splitted_str[0] == 'f'):
         p.append([int(splitted_str[1].split('/')[0]),int(splitted_str[2].split('/')[0]),int(splitted_str[3].split('/')[0])])
 
-for vertex in p:
-    print(vertex)
 
 for vertex in v:
     img_mat[int(7000*vertex[1]+250),int(7000*vertex[0]+500)] = 0
