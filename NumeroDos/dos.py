@@ -71,32 +71,34 @@ def scalar(n):
     return cosA
 
 
-file =open('model_1.obj','r+')
+file =open('elaina.obj','r+')
 v=[]
 p=[]
-img_mat= np.zeros((1000,1000,3),dtype=np.uint8)
-z_buffer = np.full((1000,1000), np.inf, dtype = np.float32)
+img_mat= np.zeros((3000,3000,3),dtype=np.uint8)
+z_buffer = np.full((3000,3000), np.inf, dtype = np.float32)
 
 for str in file:
     splitted_str = str.split()
-    if(splitted_str[0] == 'v'):
+    if(len(splitted_str)==0):
+        continue
+        if(splitted_str[0] == 'v'):
         v.append([float(splitted_str[1]),float(splitted_str[2]),float(splitted_str[3])])
     if(splitted_str[0] == 'f'):
         p.append([int(splitted_str[1].split('/')[0]),int(splitted_str[2].split('/')[0]),int(splitted_str[3].split('/')[0])])
 
-
+scale = 1
 
 for tr in p:
 
-    x0= (7000*v[tr[0]-1][0]+500)
-    y0 = (7000*v[tr[0]-1][1]+250)
-    z0 =(7000*v[tr[0]-1][2]+250)
-    x1 =(7000*v[tr[1]-1][0]+500)
-    y1 =(7000*v[tr[1]-1][1]+250)
-    z1 =(7000*v[tr[1]-1][2]+250)
-    x2 =(7000*v[tr[2]-1][0]+500)
-    y2= (7000*v[tr[2]-1][1]+250)
-    z2 = (7000*v[tr[2]-1][2]+250)
+    x0= (scale*v[tr[0]-1][0]+500)
+    y0 = (scale*v[tr[0]-1][1]+250)
+    z0 =(scale*v[tr[0]-1][2]+250)
+    x1 =(scale*v[tr[1]-1][0]+500)
+    y1 =(scale*v[tr[1]-1][1]+250)
+    z1 =(scale*v[tr[1]-1][2]+250)
+    x2 =(scale*v[tr[2]-1][0]+500)
+    y2= (scale*v[tr[2]-1][1]+250)
+    z2 = (scale*v[tr[2]-1][2]+250)
     color=[255,255,255]
     draw_triangle(img_mat,z_buffer, x0, y0, z0, x1, y1, z1, x2, y2, z2,color)
 

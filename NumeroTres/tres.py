@@ -6,7 +6,7 @@ import math
 import numpy as np
 
 def rotate(x,y,z,alpha,beta,gamma):
-    shift = np.array([0.0   ,-0.04,0.5])
+    shift = np.array([0,-1,10])
     v=np.array([x,y,z])
     alpha = alpha*3.14/180
     beta = beta*3.14/180
@@ -33,26 +33,26 @@ def rotate(x,y,z,alpha,beta,gamma):
 
 def draw_triangle(img,z_buffer,x0, y0, z0, x1, y1, z1, x2, y2, z2,color):
 
-    scale = 3500
+    scale = 2500
 
     n = norm(x0, y0, z0, x1, y1, z1, x2, y2, z2)
     cosA = scalar(n)
 
     if (cosA < 0):
-        x0p = (scale/z0 * x0 + 600)
-        y0p = (scale/z0 * y0 + 600)
-        x1p = (scale/z1 * x1 + 600)
-        y1p = (scale/z1 * y1 + 600)
-        x2p = (scale/z2 * x2 + 600)
-        y2p = (scale/z2 * y2 + 600)
+        x0p = (scale/z0 * x0 + 1500)
+        y0p = (scale/z0 * y0 + 1500)
+        x1p = (scale/z1 * x1 + 1500)
+        y1p = (scale/z1 * y1 + 1500)
+        x2p = (scale/z2 * x2 + 1500)
+        y2p = (scale/z2 * y2 + 1500)
         xmin = int(min(x0p, x1p, x2p) - 1)
         xmax = int(max(x0p, x1p, x2p) + 1)
         ymin = int(min(y0p, y1p, y2p) - 1)
         ymax = int(max(y0p, y1p, y2p) + 1)
         if (xmin < 0): xmin = 0
         if (ymin < 0): ymin = 0
-        if (xmax > 1200): xmax = 1200
-        if (ymax>1200): ymax = 1200
+        if (xmax > 3000): xmax = 3000
+        if (ymax>3000): ymax = 3000
         color = [-color[0] * cosA, -color[1] * cosA, -color[2] * cosA]
         for x in range(xmin,xmax):
             for y in range(ymin,ymax):
@@ -108,11 +108,11 @@ def scalar(n):
     return cosA
 
 
-file =open('model_1.obj', 'r+')
+file =open('../NymeroQuatro/Vivi_Final.obj', 'r+')
 v=[]
 p=[]
-img_mat= np.zeros((1200,1200,3),dtype=np.uint8)
-z_buffer = np.full((1200,1200), np.inf, dtype = np.float32)
+img_mat= np.zeros((3000,3000,3),dtype=np.uint8)
+z_buffer = np.full((3000,3000), np.inf, dtype = np.float32)
 
 for str in file:
     splitted_str = str.split()
@@ -125,7 +125,7 @@ for str in file:
 
 
 for i in v:
-    i[0],i[1],i[2]=rotate(i[0],i[1],i[2],0,0,0)
+    i[0],i[1],i[2]=rotate(i[0],i[1],i[2],0,180,0)
 
 
 
@@ -133,8 +133,8 @@ for i in v:
 for tr in p:
 
 
-    color=[randint(0,255),randint(0,255),randint(0,255)]
-    # color =[255,255,255]
+    # color=[randint(0,255),randint(0,255),randint(0,255)]
+    color =[255,255,255]
     draw_triangle(img_mat,z_buffer,
                   v[tr[0] - 1][0], v[tr[0] - 1][1], v[tr[0] - 1][2],
                   v[tr[1] - 1][0], v[tr[1] - 1][1], v[tr[1] - 1][2],
